@@ -13,29 +13,32 @@ public class Movement : MonoBehaviour
 
     public int speed = 5;
 
-    public Vector3 jump;
-    public float jumpForce = .001f;
+    public Vector2 jump;
+    public float jumpForce = 3.010f;
     public bool isGrounded;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        jump = new Vector3(0.0f, 2.0f, 0.0f);
+        //jump = new Vector3(0.0f, 2.0f, 0.0f);
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        rb.velocity = new Vector2(speed, rb.velocity.y);
+
         float time = Time.deltaTime;
         float displacement_x = Input.GetAxis(horizontal_axis_name) * speed * time;
         transform.position += new Vector3(displacement_x, 0, 0);
 
         if (Input.GetButton("Jump"))
         {
-            Debug.Log("The jump button registers");
-            rb.AddForce(new Vector2(0,10), ForceMode2D.Impulse);
+            //Debug.Log("The jump button registers");
+            //rb.AddForce(new Vector2(0,10), ForceMode2D.Impulse);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
         if (rb.velocity.y < 0)
         {
