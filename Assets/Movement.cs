@@ -13,9 +13,9 @@ public class Movement : MonoBehaviour
 
     public int speed = 5;
 
-    public Vector2 jump;
-    public float jumpForce = 3.010f;
-    public bool isGrounded;
+    //public Vector2 jump;
+    public float jumpForce = 1.0f;
+    //public bool isGrounded;
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +36,10 @@ public class Movement : MonoBehaviour
 
         if (Input.GetButton("Jump"))
         {
-            //Debug.Log("The jump button registers");
-            //rb.AddForce(new Vector2(0,10), ForceMode2D.Impulse);
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        }
+			//Debug.Log("The jump button registers");
+			rb.AddForce(new Vector2(rb.velocity.x, jumpForce), ForceMode2D.Impulse);
+			//rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+		}
         if (rb.velocity.y < 0)
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * time;
