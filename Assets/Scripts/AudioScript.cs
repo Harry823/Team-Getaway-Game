@@ -6,18 +6,17 @@ public class AudioScript : MonoBehaviour
 {
     public AudioClip MusicClip;
     public AudioSource MusicSource;
-    private bool isGrounded;
+    //private bool isGrounded;
     // Start is called before the first frame update
     void Start()
     {
-       MusicSource.clip = MusicClip;
-        isGrounded = true;
+       MusicSource.clip = MusicClip; 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if(Input.GetKeyDown(KeyCode.Space))
         MusicSource.Play();
     }
 
@@ -25,7 +24,7 @@ public class AudioScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true;
+            //isGrounded = true;
         }
     }
 
@@ -33,7 +32,7 @@ public class AudioScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false;
+            //isGrounded = false;
         }
     }
 }
