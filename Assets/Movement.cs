@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour
 
     //public Vector2 jump;
     public float jumpForce = 1.0f;
-    //public bool isGrounded;
+    public bool isGrounded;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,7 @@ public class Movement : MonoBehaviour
         float displacement_x = Input.GetAxis(horizontal_axis_name) * speed * time;
         transform.position += new Vector3(displacement_x, 0, 0);
 
-        if (Input.GetButton("Jump"))
+        if (Input.GetButton("Jump") && isGrounded)
         {
 			//Debug.Log("The jump button registers");
 			rb.AddForce(new Vector2(rb.velocity.x, jumpForce), ForceMode2D.Impulse);
@@ -49,5 +49,21 @@ public class Movement : MonoBehaviour
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * time;
         }
 
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
 }
