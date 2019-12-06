@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Movement: MonoBehaviour
 {
     public string horizontal_axis_name = "Horizontal";
     //public string vertical_axis_name = "Vertical";
@@ -11,7 +11,8 @@ public class Movement : MonoBehaviour
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
 
-    public int speed = 5;
+    public int speed = 2;
+    public static float healthAmount;
 
     //public Vector2 jump;
     public float jumpForce = 1.0f;
@@ -20,6 +21,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        healthAmount = 1;
         rb = GetComponent<Rigidbody2D>();
         //jump = new Vector3(0.0f, 2.0f, 0.0f);
     }
@@ -28,7 +30,9 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = new Vector2(speed, rb.velocity.y);
+        if (healthAmount <= 0){
+			Destroy (gameObject);
+        }
 
         float time = Time.deltaTime;
         float displacement_x = Input.GetAxis(horizontal_axis_name) * speed * time;
@@ -59,8 +63,19 @@ public class Movement : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+	{
+		
+	}
+    void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.gameObject.name.Equals ("Spike"))
+			healthAmount -= 0.1f;
+	}
+
     void OnCollisionExit2D(Collision2D collision)
     {
+        
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
